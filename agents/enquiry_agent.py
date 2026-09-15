@@ -1,27 +1,27 @@
 """
 Enquiry Resolution Agent.
 
-Processes general customer enquiries using Policy RAG.
+Processes safe customer enquiries using Policy RAG.
 
 Workflow:
 1. Validate the customer question.
-2. Create an enquiry case.
-3. Check whether the question can be answered safely.
-4. Check the JSON response cache.
+2. Read the safety result produced by the Supervisor Agent.
+3. Create an enquiry case.
+4. Check whether the question is cacheable.
 5. Return the cached answer when available.
 6. Call Policy RAG only when the answer is not cached.
-7. Save successful general policy answers to the cache.
-8. Escalate insufficient or sensitive enquiries to Customer Care.
+7. Save successful general-policy answers to the cache.
+8. Escalate insufficient Policy RAG results to Customer Care.
 
-Dynamic customer-specific questions are not cached.
+Intent and safety classification are already completed by
+tools/query_analyzer.py through the Supervisor Agent.
 """
 
-from typing import Any, Dict, List
+from typing import Any, Dict
 
 from database.repositories import EnquiryRepository
 from hitl.customer_care import create_review_request
 from services import case_service, notification_service
-from tools.enquiry_safety import can_answer_safely
 from tools.policy_rag import get_policy_answer
 from tools.response_cache import (
     get_cached_response,
@@ -46,39 +46,43 @@ def _clean_text(value: Any) -> str:
     return str(value).strip()
 
 
-def _clean_sources(sources: Any) -> List[str]:
+def _as_boolean(
+    value: Any,
+    default: bool = False,
+) -> bool:
     """
-    Convert source data into a clean list of strings.
+    Convert common Boolean representations into a Boolean.
     """
 
-    if sources is None:
-        return []
+    if isinstance(value, bool):
+        return value
 
-    if isinstance(sources, str):
-        cleaned_source = sources.strip()
+    if value is None:
+        return default
 
-        if not cleaned_source:
-            return []
+    normalized_value = str(
+        value
+    ).strip().lower()
 
-        return [cleaned_source]
+    if normalized_value in {
+        "true",
+        "1",
+        "yes",
+        "safe",
+    }:
+        return True
 
-    if isinstance(sources, (list, tuple, set)):
-        cleaned_sources = []
+    if normalized_value in {
+        "false",
+        "0",
+        "no",
+        "hitl",
+        "unsafe",
+    }:
+        return False
 
-        for source in sources:
-            cleaned_source = str(source).strip()
+    return default
 
-            if cleaned_source:
-                cleaned_sources.append(cleaned_source)
-
-        return cleaned_sources
-
-    cleaned_source = str(sources).strip()
-
-    if not cleaned_source:
-        return []
-
-    return [cleaned_source]
 
 # =========================================================
 # CREATE ENQUIRY CASE
@@ -90,6 +94,11 @@ def _create_enquiry_case(
     """
     Create a database case for the customer enquiry.
     """
+
+    if not customer_id:
+        raise ValueError(
+            "Customer ID is required to create an enquiry case."
+        )
 
     case = case_service.create_case(
         customer_id=customer_id,
@@ -129,27 +138,79 @@ def _escalate(
     Escalate an enquiry to Customer Care.
     """
 
-    review_id = create_review_request(query)
-
-    EnquiryRepository.create_enquiry(
-        case_id=case_id,
-        customer_id=customer_id,
-        query=query,
-        answer="",
-        sources=[],
-        escalated=True,
+    normalized_reason = (
+        _clean_text(reason)
+        or "The enquiry requires human review."
     )
 
-    case_service.update_stage(
-        case_id=case_id,
-        current_stage="Customer Care",
-        status="Escalated",
+    review_id = _clean_text(
+        state.get("review_id")
     )
+
+    if not review_id:
+        try:
+            review_id = _clean_text(
+                create_review_request(
+                    query
+                )
+            )
+
+        except Exception as exc:
+            logger.exception(
+                "Failed to create HITL review request. "
+                "Case ID=%s, Error=%s",
+                case_id,
+                exc,
+            )
+
+            review_id = ""
+
+    try:
+        EnquiryRepository.create_enquiry(
+            case_id=case_id,
+            customer_id=customer_id,
+            query=query,
+            answer="",
+            sources=[],
+            escalated=True,
+        )
+
+    except Exception as exc:
+        logger.exception(
+            "Failed to store escalated enquiry. "
+            "Case ID=%s, Error=%s",
+            case_id,
+            exc,
+        )
+
+    try:
+        case_service.update_stage(
+            case_id=case_id,
+            current_stage="Customer Care",
+            status="Escalated",
+        )
+
+    except Exception as exc:
+        logger.exception(
+            "Failed to update enquiry case stage. "
+            "Case ID=%s, Error=%s",
+            case_id,
+            exc,
+        )
 
     message = (
-        "Your request requires review by Customer Care.\n\n"
-        f"**Review ID:** {review_id}\n\n"
-        "A support representative will review your request."
+        "Your request requires review by our "
+        "Customer Care team.\n\n"
+    )
+
+    if review_id:
+        message += (
+            f"**Review ID:** {review_id}\n\n"
+        )
+
+    message += (
+        "A support representative will review your request "
+        "and provide further assistance."
     )
 
     try:
@@ -168,15 +229,18 @@ def _escalate(
         )
 
     logger.info(
-        "HITL triggered. Case ID=%s, Review ID=%s, Reason=%s",
+        "Enquiry escalated to HITL. "
+        "Case ID=%s, Review ID=%s, Reason=%s",
         case_id,
         review_id,
-        reason,
+        normalized_reason,
     )
 
     return {
         **state,
         "intent": "enquiry",
+        "is_safe": False,
+        "safety_reason": normalized_reason,
         "requires_hitl": True,
         "review_id": review_id,
         "case_id": case_id,
@@ -187,7 +251,76 @@ def _escalate(
 
 
 # =========================================================
-# CACHE RESPONSE HANDLER
+# DEFENSIVE SENSITIVE QUERY HANDLER
+# =========================================================
+
+def _handle_sensitive_query(
+    state: Dict[str, Any],
+    query: str,
+) -> Dict[str, Any]:
+    """
+    Handle a sensitive enquiry that reaches this agent.
+
+    Normally, the Supervisor Agent routes sensitive enquiries
+    directly to HITL. This is a defensive fallback and does not
+    perform another LLM safety check.
+    """
+
+    review_id = _clean_text(
+        state.get("review_id")
+    )
+
+    safety_reason = _clean_text(
+        state.get("safety_reason")
+    )
+
+    if not safety_reason:
+        safety_reason = (
+            "The request contains sensitive information "
+            "or requires human assistance."
+        )
+
+    response = _clean_text(
+        state.get("response")
+    )
+
+    if not response:
+        response = (
+            "This request contains sensitive information or "
+            "requires an action that cannot be completed "
+            "automatically.\n\n"
+            "The request has been forwarded to our "
+            "Customer Care team for human review."
+        )
+
+        if review_id:
+            response += (
+                f"\n\n**Review ID:** {review_id}"
+            )
+
+    logger.warning(
+        "Sensitive enquiry reached Enquiry Agent. "
+        "Query=%s, Review ID=%s, Reason=%s",
+        query,
+        review_id,
+        safety_reason,
+    )
+
+    return {
+        **state,
+        "intent": "enquiry",
+        "is_safe": False,
+        "safety_reason": safety_reason,
+        "requires_hitl": True,
+        "review_id": review_id,
+        "sources": [],
+        "response": response,
+        "cache_hit": False,
+    }
+
+
+# =========================================================
+# CACHED RESPONSE HANDLER
 # =========================================================
 
 def _handle_cached_response(
@@ -199,18 +332,55 @@ def _handle_cached_response(
 ) -> Dict[str, Any]:
     """
     Return a cached response without calling Policy RAG.
-
-    The enquiry is still recorded in enquiries.csv so that
-    customer interaction history is preserved.
     """
 
     cached_answer = _clean_text(
         cached_result.get("answer")
     )
 
-    cached_sources = _clean_sources(
-        cached_result.get("sources")
+    raw_sources = cached_result.get(
+        "sources",
+        [],
     )
+
+    if raw_sources is None:
+        cached_sources = []
+
+    elif isinstance(raw_sources, str):
+        source_value = raw_sources.strip()
+
+        if source_value:
+            cached_sources = [
+                source_value
+            ]
+        else:
+            cached_sources = []
+
+    elif isinstance(
+        raw_sources,
+        (
+            list,
+            tuple,
+            set,
+        ),
+    ):
+        cached_sources = [
+            str(source).strip()
+            for source in raw_sources
+            if str(source).strip()
+        ]
+
+    else:
+        source_value = str(
+            raw_sources
+        ).strip()
+
+        if source_value:
+            cached_sources = [
+                source_value
+            ]
+        else:
+            cached_sources = []
 
     if not cached_answer:
         raise ValueError(
@@ -236,12 +406,17 @@ def _handle_cached_response(
         "Case ID=%s, Customer ID=%s, Cache Key=%s",
         case_id,
         customer_id,
-        cached_result.get("cache_key", ""),
+        cached_result.get(
+            "cache_key",
+            "",
+        ),
     )
 
     return {
         **state,
         "intent": "enquiry",
+        "is_safe": True,
+        "safety_reason": "",
         "requires_hitl": False,
         "review_id": "",
         "case_id": case_id,
@@ -265,18 +440,55 @@ def _handle_generated_response(
 ) -> Dict[str, Any]:
     """
     Store and return a successful Policy RAG answer.
-
-    The answer is saved to the JSON cache only when the
-    question is suitable for caching.
     """
 
     generated_answer = _clean_text(
         result.get("answer")
     )
 
-    sources = _clean_sources(
-        result.get("sources")
+    raw_sources = result.get(
+        "sources",
+        [],
     )
+
+    if raw_sources is None:
+        sources = []
+
+    elif isinstance(raw_sources, str):
+        source_value = raw_sources.strip()
+
+        if source_value:
+            sources = [
+                source_value
+            ]
+        else:
+            sources = []
+
+    elif isinstance(
+        raw_sources,
+        (
+            list,
+            tuple,
+            set,
+        ),
+    ):
+        sources = [
+            str(source).strip()
+            for source in raw_sources
+            if str(source).strip()
+        ]
+
+    else:
+        source_value = str(
+            raw_sources
+        ).strip()
+
+        if source_value:
+            sources = [
+                source_value
+            ]
+        else:
+            sources = []
 
     if not generated_answer:
         raise ValueError(
@@ -317,10 +529,8 @@ def _handle_generated_response(
             )
 
         except Exception as exc:
-            # Cache failure should not prevent the customer
-            # from receiving the generated answer.
             logger.exception(
-                "Failed to save the response to cache. "
+                "Failed to save response to cache. "
                 "Case ID=%s, Error=%s",
                 case_id,
                 exc,
@@ -329,14 +539,15 @@ def _handle_generated_response(
     else:
         logger.info(
             "Response was not cached because the question "
-            "contains dynamic or customer-specific information. "
-            "Case ID=%s",
+            "is dynamic or customer-specific. Case ID=%s",
             case_id,
         )
 
     return {
         **state,
         "intent": "enquiry",
+        "is_safe": True,
+        "safety_reason": "",
         "requires_hitl": False,
         "review_id": "",
         "case_id": case_id,
@@ -355,6 +566,12 @@ def enquiry_agent(
 ) -> Dict[str, Any]:
     """
     Process a customer enquiry.
+
+    The Supervisor Agent provides:
+    - is_safe
+    - safety_reason
+    - analysis_source
+    - review_id
     """
 
     query = _clean_text(
@@ -365,10 +582,22 @@ def enquiry_agent(
         state.get("customer_id")
     ).upper()
 
+    is_safe = _as_boolean(
+        state.get("is_safe"),
+        default=True,
+    )
+
+    analysis_source = _clean_text(
+        state.get("analysis_source")
+    )
+
     logger.info(
-        "Enquiry Agent started. Customer ID=%s, Query=%s",
+        "Enquiry Agent started. "
+        "Customer ID=%s, Query=%s, Safe=%s, Source=%s",
         customer_id,
         query,
+        is_safe,
+        analysis_source,
     )
 
     state["intent"] = "enquiry"
@@ -396,7 +625,39 @@ def enquiry_agent(
         }
 
     # =====================================================
-    # 2. CREATE ENQUIRY CASE
+    # 2. READ SUPERVISOR SAFETY RESULT
+    # =====================================================
+
+    if not is_safe:
+        return _handle_sensitive_query(
+            state=state,
+            query=query,
+        )
+
+    # =====================================================
+    # 3. VALIDATE CUSTOMER
+    # =====================================================
+
+    if not customer_id:
+        logger.warning(
+            "Enquiry Agent received an empty Customer ID."
+        )
+
+        return {
+            **state,
+            "requires_hitl": False,
+            "review_id": "",
+            "case_id": "",
+            "sources": [],
+            "response": (
+                "I couldn't identify the customer account. "
+                "Please select a customer and try again."
+            ),
+            "cache_hit": False,
+        }
+
+    # =====================================================
+    # 4. CREATE ENQUIRY CASE
     # =====================================================
 
     try:
@@ -430,43 +691,13 @@ def enquiry_agent(
         }
 
     # =====================================================
-    # 3. SAFETY CHECK
+    # 5. CHECK CACHEABILITY
     # =====================================================
 
     try:
-        safe_to_answer = can_answer_safely(query)
-
-    except Exception as exc:
-        logger.exception(
-            "Enquiry safety check failed. "
-            "Case ID=%s, Error=%s",
-            case_id,
-            exc,
+        cacheable = is_cacheable_question(
+            query
         )
-
-        return _escalate(
-            state=state,
-            case_id=case_id,
-            customer_id=customer_id,
-            query=query,
-            reason="safety check failure",
-        )
-
-    if not safe_to_answer:
-        return _escalate(
-            state=state,
-            case_id=case_id,
-            customer_id=customer_id,
-            query=query,
-            reason="sensitive or unsafe query",
-        )
-
-    # =====================================================
-    # 4. CHECK WHETHER QUESTION CAN BE CACHED
-    # =====================================================
-
-    try:
-        cacheable = is_cacheable_question(query)
 
     except Exception as exc:
         logger.exception(
@@ -486,7 +717,7 @@ def enquiry_agent(
     )
 
     # =====================================================
-    # 5. CHECK JSON RESPONSE CACHE
+    # 6. CHECK RESPONSE CACHE
     # =====================================================
 
     cached_result = None
@@ -526,11 +757,8 @@ def enquiry_agent(
                 exc,
             )
 
-            # Continue to Policy RAG if cached-answer
-            # processing fails.
-
     # =====================================================
-    # 6. CALL POLICY RAG
+    # 7. CALL POLICY RAG
     # =====================================================
 
     try:
@@ -539,7 +767,9 @@ def enquiry_agent(
             case_id,
         )
 
-        result = get_policy_answer(query)
+        result = get_policy_answer(
+            query
+        )
 
         logger.info(
             "Policy RAG completed. Case ID=%s",
@@ -548,7 +778,8 @@ def enquiry_agent(
 
     except Exception as exc:
         logger.exception(
-            "Policy RAG failed. Case ID=%s, Error=%s",
+            "Policy RAG failed. "
+            "Case ID=%s, Error=%s",
             case_id,
             exc,
         )
@@ -562,10 +793,13 @@ def enquiry_agent(
         )
 
     # =====================================================
-    # 7. VALIDATE POLICY RAG RESULT
+    # 8. VALIDATE POLICY RAG RESULT
     # =====================================================
 
-    if not isinstance(result, dict):
+    if not isinstance(
+        result,
+        dict,
+    ):
         logger.error(
             "Policy RAG returned an invalid result. "
             "Case ID=%s, Result Type=%s",
@@ -578,21 +812,25 @@ def enquiry_agent(
             case_id=case_id,
             customer_id=customer_id,
             query=query,
-            reason="invalid Policy RAG result",
+            reason="Invalid Policy RAG result",
         )
 
-    sufficient = bool(
-        result.get("sufficient", False)
+    sufficient = _as_boolean(
+        result.get("sufficient"),
+        default=False,
     )
 
     generated_answer = _clean_text(
         result.get("answer")
     )
 
-    if not sufficient or not generated_answer:
+    if (
+        not sufficient
+        or not generated_answer
+    ):
         logger.warning(
             "Policy RAG result was insufficient. "
-            "Case ID=%s, Sufficient=%s, HasAnswer=%s",
+            "Case ID=%s, Sufficient=%s, Has Answer=%s",
             case_id,
             sufficient,
             bool(generated_answer),
@@ -603,11 +841,13 @@ def enquiry_agent(
             case_id=case_id,
             customer_id=customer_id,
             query=query,
-            reason="insufficient retrieved information",
+            reason=(
+                "Insufficient retrieved policy information"
+            ),
         )
 
     # =====================================================
-    # 8. STORE AND RETURN GENERATED RESPONSE
+    # 9. STORE AND RETURN GENERATED RESPONSE
     # =====================================================
 
     try:
@@ -622,23 +862,63 @@ def enquiry_agent(
 
     except Exception as exc:
         logger.exception(
-            "Failed to store the generated enquiry response. "
+            "Failed to store generated enquiry response. "
             "Case ID=%s, Error=%s",
             case_id,
             exc,
         )
 
-        # Return the generated answer even if writing to the
-        # enquiry database or JSON cache fails.
+        raw_sources = result.get(
+            "sources",
+            [],
+        )
+
+        if raw_sources is None:
+            fallback_sources = []
+
+        elif isinstance(raw_sources, str):
+            source_value = raw_sources.strip()
+
+            fallback_sources = (
+                [source_value]
+                if source_value
+                else []
+            )
+
+        elif isinstance(
+            raw_sources,
+            (
+                list,
+                tuple,
+                set,
+            ),
+        ):
+            fallback_sources = [
+                str(source).strip()
+                for source in raw_sources
+                if str(source).strip()
+            ]
+
+        else:
+            source_value = str(
+                raw_sources
+            ).strip()
+
+            fallback_sources = (
+                [source_value]
+                if source_value
+                else []
+            )
+
         return {
             **state,
             "intent": "enquiry",
+            "is_safe": True,
+            "safety_reason": "",
             "requires_hitl": False,
             "review_id": "",
             "case_id": case_id,
-            "sources": _clean_sources(
-                result.get("sources")
-            ),
+            "sources": fallback_sources,
             "response": generated_answer,
             "cache_hit": False,
         }

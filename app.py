@@ -7,6 +7,7 @@ from graph.workflow import graph
 from tools.evidence_upload import save_complaint_evidence
 from utils.logger import logger
 from utils.theme import apply_app_theme
+from graph.workflow import invoke_graph
 
 
 # =========================================================
@@ -634,9 +635,7 @@ elif pending_field == "evidence_review":
                 with st.spinner(
                     "Checking the latest review status..."
                 ):
-                    result = graph.invoke(
-                        refresh_state
-                    )
+                    result = invoke_graph(refresh_state)
 
                 if not result:
                     raise ValueError(
@@ -791,9 +790,7 @@ if user_input:
             with st.spinner(
                 "Processing your request..."
             ):
-                result = graph.invoke(
-                    state
-                )
+                result = invoke_graph(state)
 
             if not result:
                 raise ValueError(

@@ -23,3 +23,16 @@ LOGF90B490D,CASE1A75E3E2,2026-09-15 01:48:40,Case closed: Enquiry answered,Syste
 LOGC9B514E9,CASE763B2CE7,2026-09-15 01:49:46,Case created (Enquiry),System
 LOGC12CAF59,CASE763B2CE7,2026-09-15 01:50:10,"Case updated: stage -> Closed, status -> Closed",System
 LOG07D7C412,CASE763B2CE7,2026-09-15 01:50:10,Case closed: Enquiry answered,System
+LOG4F586A98,CASED835D1CC,2026-09-15 11:45:41,Case created (Enquiry),System
+LOGD91E33FE,CASED835D1CC,2026-09-15 11:46:19,"Case updated: stage -> Customer Care, status -> Escalated",System
+LOG0E9B2BE3,CASED835D1CC,2026-09-15 11:46:19,"Customer notified: Your request requires review by Customer Care.
+
+**Review ID:** HR-D498663A
+
+A support representative will review your request.",System
+LOG581A9625,CASE260954A4,2026-09-15 11:54:33,Case created (Enquiry),System
+LOG8CCC20A7,CASE260954A4,2026-09-15 11:54:46,"Case updated: stage -> Closed, status -> Closed",System
+LOGE084EA68,CASE260954A4,2026-09-15 11:54:46,Case closed: Enquiry answered from response cache,System
+LOGEC767B6C,CASE33C1C059,2026-09-15 15:40:22,Case created (Enquiry),System
+LOG0482A2E7,CASE33C1C059,2026-09-15 15:41:00,"Case updated: stage -> Closed, status -> Closed",System
+LOG12EB501C,CASE33C1C059,2026-09-15 15:41:00,Case closed: Enquiry answered,System

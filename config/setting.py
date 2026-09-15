@@ -4,7 +4,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Overridable via env in case Google deprecates/renames the model again.
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 
 KNOWLEDGE_BASE_DIR = BASE_DIR / "datasets" / "knowledge_base"
 
