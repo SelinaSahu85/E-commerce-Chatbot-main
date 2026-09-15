@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "entries": {
+    "5d2d5ceeb575d338d76f028655eb9d23be4ca00d3c0540cffdef5a5bb0f28bc4": {
+      "question": "Please explain the Myntra return policy",
+      "normalized_question": "please explain the myntra return policy",
+      "answer": "Based on the provided context, here is an overview of Myntra’s Return and Exchange Policy:\n\n### **General Terms & Conditions**\n* **Product Condition:** Items must be returned or exchanged unused, unwashed, and preserved in their original condition with all tags, packaging, and intact Seal Tags (if one was attached).\n* **Product-Specific Policies:** Return policies are offered by respective sellers. The return/replacement policy stated on a product’s specific page prevails over the general returns policy.\n* **Pickup Address:** Returns/exchanges are picked up from the same address where the product was originally delivered.\n* **Free Gifts/Offers:** If you return a main item that came with a free gift or offer, you must return the free product as well.\n* **Misused Accounts / Policy Breaches:** Myntra reserves the right to restrict returns or exchanges if a customer misuses or breaches the policy under their Fair Usage Policy.\n\n---\n\n### **How to Return an Item**\nThere are two ways to return a product:\n1. **Pick Up (Free in most locations):**\n   * Select the pickup option when submitting a return request via the App or Desktop. \n   * A delivery agent will conduct a simple quality check at your doorstep (\"No Questions Asked Returns\"). Upon acceptance, your refund is initiated immediately.\n2. **Self-Ship (If pickup service is not available):**\n   * Pack the items securely and use a reliable courier service. \n   * Share an image/scan of the courier receipt with Myntra. \n   * Once validated and verified against the return policy, your shipping costs will be reimbursed/credited (e.g., as Myntra credits).\n\n---\n\n### **Exchanges**\n1. Generate an Exchange ID via the App/Website/M-site and note it down for reference.\n2. Place the unused item in an unsealed packet with all original tags attached.\n3. Hand over the original product to the delivery staff member when they deliver the exchange item at your address.\n4. Track the status under the \"My Orders\" section.\n\n---\n\n### **Refunds & Platform Fees**\n* **Refund Timelines:** Once initiated, refunds to Credit/Debit Cards, Net Banking, or Wallets take **7–10 days**. Refunds to PhonePe wallet balance are instant (which can later be transferred to a bank account via PhonePe support).\n* **Platform Fee Refunds:** \n  * Platform charges are refunded only in the case of a **full order cancellation**.\n  * Platform charges are **not refunded** for partial order returns/cancellations or for accounts that do not adhere to the Fair Usage Policy.\n\n---\n\n### **Important Note on Mistaken Returns**\nMyntra is not liable or accountable for extra or incorrect products returned by mistake, and is not responsible for misplacement, replacement, or delivering those items back to you.",
+      "intent": "enquiry",
+      "sources": [
+        "Myntra Policies.pdf (page 4)",
+        "Myntra Policies.pdf (page 3)",
+        "Myntra Policies.pdf (page 5)",
+        "Flipkart_policy.docx",
+        "Myntra Policies.pdf (page 2)"
+      ],
+      "metadata": {
+        "answer_type": "policy_rag"
+      },
+      "created_at": "2026-09-15 01:48:40",
+      "updated_at": "2026-09-15 01:48:40"
+    },
+    "7de30619929fbe03a10de71786727774322e2da94ab538e4320093ead3216b4b": {
+      "question": "What is myntra return policy?",
+      "normalized_question": "what is myntra return policy",
+      "answer": "Based on the provided information, Myntra's Return and Exchange Policy includes the following key details:\n\n* **Return Window & Eligibility:** You can return or exchange items purchased on Myntra for any reason within the specified return/exchange period (which can be checked on the product details page).\n* **Condition of the Product:** Products must be unused, unwashed, and preserved in their original condition with all tags, packaging, and seal tags (if provided) intact.\n* **Items with Free Gifts:** If you return a main product that came with a free gift or offer, you must return the free product as well.\n* **Return Methods:**\n  1. **Pick Up:** Offered in most locations from the same address where the product was delivered. A delivery agent may perform a quality check at your doorstep before accepting the return and initiating the refund.\n  2. **Self-Ship:** If pickup is unavailable at your location, you can self-ship the item securely using a reliable courier. Shipping costs will be reimbursed (in the form of Myntra credits) provided the return meets the policy and you share a scanned image of the courier receipt for validation.\n* **Accidental Returns:** Myntra is not liable or accountable for extra or different products returned by mistake and will not be responsible for delivering them back to you.\n* **Platform Fees:** Platform charges are non-refundable if you return an order or partially cancel it (platform charges are only refunded in the case of a full order cancellation). \n* **Fair Usage & Policy Breach:** Myntra reserves the right to restrict exchanges or returns if a customer breaches or misuses the policy or fails to adhere to the fair usage policy.",
+      "intent": "enquiry",
+      "sources": [
+        "Myntra Policies.pdf (page 4)",
+        "Myntra Policies.pdf (page 5)",
+        "Myntra Policies.pdf (page 3)",
+        "Myntra Policies.pdf (page 2)",
+        "Flipkart_policy.docx"
+      ],
+      "metadata": {
+        "answer_type": "policy_rag"
+      },
+      "created_at": "2026-09-15 01:50:10",
+      "updated_at": "2026-09-15 01:50:10"
+    }
+  }
+}

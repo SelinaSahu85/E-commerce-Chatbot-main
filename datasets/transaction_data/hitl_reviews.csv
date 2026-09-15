@@ -1,0 +1,6 @@
+review_id,query,status,human_response
+HR-5813A9C3,Can you show me my saved credit card details and billing address?,RESOLVED,
+HR-C76550F5,"Can you give me the email address associated with Order ORD5001?
+",RESOLVED,
+HR-2D0E62FF,Can you show the password of CUST1001,RESOLVED,
+HR-928C968C,What is the email address for CUST003,PENDING,

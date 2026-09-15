@@ -1,0 +1,41 @@
+query,intent,category,expected_response_type
+
+"Can I return a laptop after 15 days?",return_policy,Returns Policy,Policy Answer
+"Can I return accessories after 10 days?",return_policy,Returns Policy,Policy Answer
+"What is the return window for televisions?",return_policy,Returns Policy,Policy Answer
+"Do I need the original package for returns?",return_policy,Returns Policy,Policy Answer
+
+"How long does a refund take?",refund_policy,Refund Policy,Policy Answer
+"When will my refund be credited?",refund_policy,Refund Policy,Policy Answer
+"Can I get a refund after the return period?",refund_policy,Refund Policy,Policy Answer
+"How can I check my refund status?",refund_status,Refund Policy,Status Answer
+
+"Can I replace a damaged mobile phone?",replacement_policy,Replacement Policy,Policy Answer
+"What is the replacement window for laptops?",replacement_policy,Replacement Policy,Policy Answer
+"Can I get a replacement for a wrong product?",replacement_policy,Replacement Policy,Policy Answer
+"Is replacement available for manufacturing defects?",replacement_policy,Replacement Policy,Policy Answer
+
+"How do I track my order?",track_order,Shipping,Tracking Answer
+"Where is my package?",track_order,Shipping,Tracking Answer
+"How long does delivery take?",shipping_info,Shipping,FAQ Answer
+"What if my delivery is delayed?",shipping_delay,Shipping,FAQ Answer
+
+"What payment methods are supported?",payment_methods,Payments,FAQ Answer
+"I was charged twice. What should I do?",billing_help,Payments,Escalate
+"Payment deducted but no order created.",billing_help,Payments,Escalate
+"Can I pay using UPI?",payment_methods,Payments,FAQ Answer
+
+"How can I change my address?",address_change,Account Management,FAQ Answer
+"Can I update my phone number?",profile_update,Account Management,FAQ Answer
+"How do I update my email address?",profile_update,Account Management,FAQ Answer
+"How can I reset my password?",password_reset,Account Management,FAQ Answer
+
+"What is covered under warranty?",warranty_info,Warranty,Policy Answer
+"My product stopped working during warranty.",warranty_claim,Warranty,Escalate
+"Does warranty cover accidental damage?",warranty_info,Warranty,Policy Answer
+"What documents are needed for warranty claims?",warranty_claim,Warranty,FAQ Answer
+
+"When is a compensation voucher issued?",voucher_policy,Voucher,Policy Answer
+"How long is a voucher valid?",voucher_policy,Voucher,Policy Answer
+"Can I use multiple vouchers together?",voucher_policy,Voucher,FAQ Answer
+"How much compensation is provided for delayed delivery?",voucher_policy,Voucher,Policy Answer

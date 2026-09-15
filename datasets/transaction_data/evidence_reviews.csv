@@ -1,0 +1,4 @@
+evidence_id,case_id,order_id,evidence_type,file_path,description,result,comments,reviewed_by,uploaded_at,reviewed_at
+EV814E5487,CASE0001,ORD5001,IMAGE,C:\Users\Selina.Sahu\Downloads\E-commerce-Chatbot-main\E-commerce-Chatbot-main\uploaded_evidence\CASE0001_A4CB732F.webp,Customer uploaded an image for complaint verification,APPROVED,,Selina,2026-09-13 20:00:04,2026-09-13 20:00:22
+EV8736575A,CASE0E3D1136,ORD5046,IMAGE,C:\Users\Selina.Sahu\Downloads\E-commerce-Chatbot-main\E-commerce-Chatbot-main\uploaded_evidence\CASE0E3D1136_AE0D84EA.webp,Customer uploaded an image for complaint verification,PENDING,,,2026-09-13 23:05:13,
+EV9E8B9FB3,CASE0001,ORD5001,IMAGE,C:\Users\Selina.Sahu\Downloads\E-commerce-Chatbot-main\E-commerce-Chatbot-main\uploaded_evidence\CASE0001_CF183899.webp,Customer uploaded an image for complaint verification,APPROVED,,Akash,2026-09-15 00:16:19,2026-09-15 00:16:47

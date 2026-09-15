@@ -1,0 +1,11 @@
+case_id,customer_id,order_id,case_type,current_stage,status,opened_date,closed_date
+CASE9A05E43C,CUST001,,Enquiry,Open,Open,2026-09-13,
+CASE32D9FD31,CUST001,,Enquiry,Closed,Closed,2026-09-13,2026-09-13
+CASE7C5176E9,CUST001,,Enquiry,Customer Care,Escalated,2026-09-13,
+CASE12CC5897,CUST001,,Enquiry,Closed,Closed,2026-09-15,2026-09-15
+CASE939D5FA7,CUST001,,Enquiry,Open,Open,2026-09-15,
+CASE01CA47E2,CUST001,,Enquiry,Open,Open,2026-09-15,
+CASE43E560F8,CUST001,,Enquiry,Open,Open,2026-09-15,
+CASEF09856DB,CUST001,,Enquiry,Open,Open,2026-09-15,
+CASE1A75E3E2,CUST001,,Enquiry,Closed,Closed,2026-09-15,2026-09-15
+CASE763B2CE7,CUST001,,Enquiry,Closed,Closed,2026-09-15,2026-09-15

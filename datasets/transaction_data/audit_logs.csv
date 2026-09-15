@@ -1,0 +1,25 @@
+log_id,case_id,timestamp,action,user
+LOG5B7286E9,CASETEST001,2026-09-13 21:38:10,Schema test,System
+LOGC41492DB,CASE32D9FD31,2026-09-13 21:38:40,Case created (Enquiry),System
+LOGAD79C84A,CASE32D9FD31,2026-09-13 21:39:14,"Case updated: stage -> Closed, status -> Closed",System
+LOG3882D0BA,CASE32D9FD31,2026-09-13 21:39:14,Case closed: Enquiry answered,System
+LOG23EA556B,CASE7C5176E9,2026-09-13 21:40:58,Case created (Enquiry),System
+LOG0F61C478,CASE7C5176E9,2026-09-13 21:41:01,"Case updated: stage -> Customer Care, status -> Escalated",System
+LOGED18C0F1,CASE7C5176E9,2026-09-13 21:41:01,"Customer notified: Your request requires review by Customer Care.
+
+Review ID: HR-928C968C
+
+A support representative will review your request.",System
+LOG3688393D,CASE12CC5897,2026-09-15 01:16:06,Case created (Enquiry),System
+LOG0CC6498A,CASE12CC5897,2026-09-15 01:16:46,"Case updated: stage -> Closed, status -> Closed",System
+LOG734C9479,CASE12CC5897,2026-09-15 01:16:46,Case closed: Enquiry answered,System
+LOG555D8A22,CASE939D5FA7,2026-09-15 01:30:30,Case created (Enquiry),System
+LOG43831574,CASE01CA47E2,2026-09-15 01:32:41,Case created (Enquiry),System
+LOG50679193,CASE43E560F8,2026-09-15 01:34:18,Case created (Enquiry),System
+LOG96EC537C,CASEF09856DB,2026-09-15 01:35:40,Case created (Enquiry),System
+LOGBB1D1235,CASE1A75E3E2,2026-09-15 01:46:56,Case created (Enquiry),System
+LOG955070D5,CASE1A75E3E2,2026-09-15 01:48:40,"Case updated: stage -> Closed, status -> Closed",System
+LOGF90B490D,CASE1A75E3E2,2026-09-15 01:48:40,Case closed: Enquiry answered,System
+LOGC9B514E9,CASE763B2CE7,2026-09-15 01:49:46,Case created (Enquiry),System
+LOGC12CAF59,CASE763B2CE7,2026-09-15 01:50:10,"Case updated: stage -> Closed, status -> Closed",System
+LOG07D7C412,CASE763B2CE7,2026-09-15 01:50:10,Case closed: Enquiry answered,System

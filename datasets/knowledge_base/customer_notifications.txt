@@ -1,0 +1,29 @@
+CASE_CREATED
+Your case has been successfully created.
+
+UNDER_REVIEW
+Your case is currently under review.
+
+EVIDENCE_REQUIRED
+Additional evidence is required to continue processing your request.
+
+REFUND_APPROVED
+Your refund request has been approved.
+
+REFUND_COMPLETED
+Your refund has been successfully processed.
+
+REPLACEMENT_APPROVED
+Your replacement request has been approved.
+
+REPLACEMENT_SHIPPED
+Your replacement item has been shipped.
+
+VOUCHER_ISSUED
+A compensation voucher has been issued to your account.
+
+CASE_ESCALATED
+Your case has been escalated to customer care.
+
+CASE_CLOSED
+Your case has been successfully resolved and closed.

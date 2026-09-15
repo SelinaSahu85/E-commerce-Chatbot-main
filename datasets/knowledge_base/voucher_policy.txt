@@ -1,0 +1,16 @@
+Voucher Policy
+
+Voucher compensation may be offered when:
+
+- Delivery is delayed.
+- Minor service issues occur.
+- Refund is not applicable.
+- Customer inconvenience is confirmed.
+
+Voucher Values:
+
+Minor Issue: ₹500
+Moderate Issue: ₹1000
+Major Service Failure: ₹2000
+
+Voucher validity: 90 days

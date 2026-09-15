@@ -1,0 +1,51 @@
+customer_id,customer_name,email,phone,city,state,pincode,customer_since,loyalty_tier
+CUST001,Aarav Sharma,aarav.sharma1@example.com,+91-9000000001,Mumbai,Maharashtra,400001,2022-02-02,GOLD
+CUST002,Diya Patel,diya.patel2@example.com,+91-9000000002,Pune,Maharashtra,411001,2023-03-03,PLATINUM
+CUST003,Ishaan Kumar,ishaan.kumar3@example.com,+91-9000000003,Bengaluru,Karnataka,560001,2024-04-04,SILVER
+CUST004,Kavya Nair,kavya.nair4@example.com,+91-9000000004,Hyderabad,Telangana,500001,2025-05-05,GOLD
+CUST005,Rohan Gupta,rohan.gupta5@example.com,+91-9000000005,Delhi,Delhi,110001,2021-06-06,PLATINUM
+CUST006,Meera Iyer,meera.iyer6@example.com,+91-9000000006,Chennai,Tamil Nadu,600001,2022-07-07,SILVER
+CUST007,Arjun Singh,arjun.singh7@example.com,+91-9000000007,Kolkata,West Bengal,700001,2023-08-08,GOLD
+CUST008,Ananya Joshi,ananya.joshi8@example.com,+91-9000000008,Ahmedabad,Gujarat,380001,2024-09-09,PLATINUM
+CUST009,Vivaan Mehta,vivaan.mehta9@example.com,+91-9000000009,Jaipur,Rajasthan,302001,2025-10-10,SILVER
+CUST010,Nisha Rao,nisha.rao10@example.com,+91-9000000010,Bhubaneswar,Odisha,751001,2021-11-11,GOLD
+CUST011,Aarav Sharma,aarav.sharma11@example.com,+91-9000000011,Mumbai,Maharashtra,400001,2022-12-12,PLATINUM
+CUST012,Diya Patel,diya.patel12@example.com,+91-9000000012,Pune,Maharashtra,411001,2023-01-13,SILVER
+CUST013,Ishaan Kumar,ishaan.kumar13@example.com,+91-9000000013,Bengaluru,Karnataka,560001,2024-02-14,GOLD
+CUST014,Kavya Nair,kavya.nair14@example.com,+91-9000000014,Hyderabad,Telangana,500001,2025-03-15,PLATINUM
+CUST015,Rohan Gupta,rohan.gupta15@example.com,+91-9000000015,Delhi,Delhi,110001,2021-04-16,SILVER
+CUST016,Meera Iyer,meera.iyer16@example.com,+91-9000000016,Chennai,Tamil Nadu,600001,2022-05-17,GOLD
+CUST017,Arjun Singh,arjun.singh17@example.com,+91-9000000017,Kolkata,West Bengal,700001,2023-06-18,PLATINUM
+CUST018,Ananya Joshi,ananya.joshi18@example.com,+91-9000000018,Ahmedabad,Gujarat,380001,2024-07-19,SILVER
+CUST019,Vivaan Mehta,vivaan.mehta19@example.com,+91-9000000019,Jaipur,Rajasthan,302001,2025-08-20,GOLD
+CUST020,Nisha Rao,nisha.rao20@example.com,+91-9000000020,Bhubaneswar,Odisha,751001,2021-09-21,PLATINUM
+CUST021,Aarav Sharma,aarav.sharma21@example.com,+91-9000000021,Mumbai,Maharashtra,400001,2022-10-22,SILVER
+CUST022,Diya Patel,diya.patel22@example.com,+91-9000000022,Pune,Maharashtra,411001,2023-11-23,GOLD
+CUST023,Ishaan Kumar,ishaan.kumar23@example.com,+91-9000000023,Bengaluru,Karnataka,560001,2024-12-24,PLATINUM
+CUST024,Kavya Nair,kavya.nair24@example.com,+91-9000000024,Hyderabad,Telangana,500001,2025-01-25,SILVER
+CUST025,Rohan Gupta,rohan.gupta25@example.com,+91-9000000025,Delhi,Delhi,110001,2021-02-26,GOLD
+CUST026,Meera Iyer,meera.iyer26@example.com,+91-9000000026,Chennai,Tamil Nadu,600001,2022-03-27,PLATINUM
+CUST027,Arjun Singh,arjun.singh27@example.com,+91-9000000027,Kolkata,West Bengal,700001,2023-04-01,SILVER
+CUST028,Ananya Joshi,ananya.joshi28@example.com,+91-9000000028,Ahmedabad,Gujarat,380001,2024-05-02,GOLD
+CUST029,Vivaan Mehta,vivaan.mehta29@example.com,+91-9000000029,Jaipur,Rajasthan,302001,2025-06-03,PLATINUM
+CUST030,Nisha Rao,nisha.rao30@example.com,+91-9000000030,Bhubaneswar,Odisha,751001,2021-07-04,SILVER
+CUST031,Aarav Sharma,aarav.sharma31@example.com,+91-9000000031,Mumbai,Maharashtra,400001,2022-08-05,GOLD
+CUST032,Diya Patel,diya.patel32@example.com,+91-9000000032,Pune,Maharashtra,411001,2023-09-06,PLATINUM
+CUST033,Ishaan Kumar,ishaan.kumar33@example.com,+91-9000000033,Bengaluru,Karnataka,560001,2024-10-07,SILVER
+CUST034,Kavya Nair,kavya.nair34@example.com,+91-9000000034,Hyderabad,Telangana,500001,2025-11-08,GOLD
+CUST035,Rohan Gupta,rohan.gupta35@example.com,+91-9000000035,Delhi,Delhi,110001,2021-12-09,PLATINUM
+CUST036,Meera Iyer,meera.iyer36@example.com,+91-9000000036,Chennai,Tamil Nadu,600001,2022-01-10,SILVER
+CUST037,Arjun Singh,arjun.singh37@example.com,+91-9000000037,Kolkata,West Bengal,700001,2023-02-11,GOLD
+CUST038,Ananya Joshi,ananya.joshi38@example.com,+91-9000000038,Ahmedabad,Gujarat,380001,2024-03-12,PLATINUM
+CUST039,Vivaan Mehta,vivaan.mehta39@example.com,+91-9000000039,Jaipur,Rajasthan,302001,2025-04-13,SILVER
+CUST040,Nisha Rao,nisha.rao40@example.com,+91-9000000040,Bhubaneswar,Odisha,751001,2021-05-14,GOLD
+CUST041,Aarav Sharma,aarav.sharma41@example.com,+91-9000000041,Mumbai,Maharashtra,400001,2022-06-15,PLATINUM
+CUST042,Diya Patel,diya.patel42@example.com,+91-9000000042,Pune,Maharashtra,411001,2023-07-16,SILVER
+CUST043,Ishaan Kumar,ishaan.kumar43@example.com,+91-9000000043,Bengaluru,Karnataka,560001,2024-08-17,GOLD
+CUST044,Kavya Nair,kavya.nair44@example.com,+91-9000000044,Hyderabad,Telangana,500001,2025-09-18,PLATINUM
+CUST045,Rohan Gupta,rohan.gupta45@example.com,+91-9000000045,Delhi,Delhi,110001,2021-10-19,SILVER
+CUST046,Meera Iyer,meera.iyer46@example.com,+91-9000000046,Chennai,Tamil Nadu,600001,2022-11-20,GOLD
+CUST047,Arjun Singh,arjun.singh47@example.com,+91-9000000047,Kolkata,West Bengal,700001,2023-12-21,PLATINUM
+CUST048,Ananya Joshi,ananya.joshi48@example.com,+91-9000000048,Ahmedabad,Gujarat,380001,2024-01-22,SILVER
+CUST049,Vivaan Mehta,vivaan.mehta49@example.com,+91-9000000049,Jaipur,Rajasthan,302001,2025-02-23,GOLD
+CUST050,Nisha Rao,nisha.rao50@example.com,+91-9000000050,Bhubaneswar,Odisha,751001,2021-03-24,PLATINUM

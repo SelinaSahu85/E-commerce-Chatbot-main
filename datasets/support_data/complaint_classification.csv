@@ -1,0 +1,61 @@
+complaint_text,complaint_type,requested_resolution,recommended_resolution,evidence_required
+
+"Laptop screen cracked on delivery",Damaged Product,Replacement,Replacement,Yes
+"Mobile phone received with broken display",Damaged Product,Replacement,Replacement,Yes
+"Television arrived with visible cracks",Damaged Product,Refund,Refund,Yes
+"Tablet body damaged when delivered",Damaged Product,Replacement,Replacement,Yes
+
+"Laptop not powering on",Defective Product,Replacement,Replacement,Yes
+"Smartwatch does not start after charging",Defective Product,Replacement,Replacement,Yes
+"Battery drains within one hour of usage",Defective Product,Replacement,Replacement,Yes
+"Speaker produces distorted sound",Defective Product,Replacement,Replacement,Yes
+
+"Received wrong laptop model",Wrong Product,Replacement,Replacement,No
+"Received wrong mobile color",Wrong Product,Replacement,Replacement,No
+"Ordered 128GB version but received 64GB",Wrong Product,Replacement,Replacement,No
+"Received different accessory than ordered",Wrong Product,Replacement,Replacement,No
+
+"Package delivered but product missing",Missing Item,Refund,Refund,Yes
+"Received empty package",Missing Item,Refund,Refund,Yes
+"One item missing from shipment",Missing Item,Replacement,Replacement,Yes
+"Order marked delivered but not received",Missing Item,Escalation,Escalate,Yes
+
+"Charger missing from laptop box",Missing Parts,Replacement,Replacement,Yes
+"Earphones missing from package",Missing Parts,Replacement,Replacement,Yes
+"Furniture delivered without screws",Missing Parts,Replacement,Replacement,Yes
+"Camera battery missing from box",Missing Parts,Replacement,Replacement,Yes
+
+"Order delivered 10 days late",Late Delivery,Compensation,Voucher,No
+"Delivery delayed beyond promised date",Late Delivery,Compensation,Voucher,No
+"Courier delivered package very late",Late Delivery,Compensation,Voucher,No
+"Package delayed repeatedly",Late Delivery,Compensation,Voucher,No
+
+"Need refund because product quality is poor",Refund Request,Refund,Refund,Yes
+"Returning item and requesting refund",Refund Request,Refund,Refund,No
+"Product unusable and want refund",Refund Request,Refund,Refund,Yes
+"Need money back for defective item",Refund Request,Refund,Refund,Yes
+
+"Replace damaged smartwatch",Replacement Request,Replacement,Replacement,Yes
+"Need replacement for wrong product",Replacement Request,Replacement,Replacement,No
+"Replace defective television",Replacement Request,Replacement,Replacement,Yes
+"Requesting replacement due to product defect",Replacement Request,Replacement,Replacement,Yes
+
+"Laptop stopped working during warranty",Warranty Claim,Repair,Escalate,Yes
+"Mobile malfunction under warranty",Warranty Claim,Repair,Escalate,Yes
+"Television issue covered by warranty",Warranty Claim,Repair,Escalate,Yes
+"Warranty repair request",Warranty Claim,Repair,Escalate,Yes
+
+"Package seal was broken before delivery",Package Tampered,Refund,Escalate,Yes
+"Package appeared opened already",Package Tampered,Refund,Escalate,Yes
+"Repackaged product received",Package Tampered,Replacement,Escalate,Yes
+"Possible tampering during shipping",Package Tampered,Refund,Escalate,Yes
+
+"Charged twice for the same order",Billing Issue,Refund,Refund,No
+"Payment completed but order failed",Billing Issue,Refund,Escalate,No
+"Invoice amount is incorrect",Billing Issue,Refund,Escalate,No
+"Payment deducted twice from account",Billing Issue,Refund,Refund,No
+
+"Customer support closed my complaint without resolution",Service Complaint,Escalation,Escalate,No
+"No response from support team",Service Complaint,Escalation,Escalate,No
+"Complaint unresolved after multiple calls",Service Complaint,Escalation,Escalate,No
+"Poor customer service experience",Service Complaint,Escalation,Escalate,No

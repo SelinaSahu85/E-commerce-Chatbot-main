@@ -1,0 +1,63 @@
+# LLM & LangChain
+langchain
+langchain-community
+langchain-core
+langchain-google-genai
+langchain-huggingface
+langchain-text-splitters
+
+# Agent Orchestration
+langgraph
+
+# LangSmith Observability
+langsmith
+
+# Vector Database
+faiss-cpu
+
+# Embeddings & NLP
+sentence-transformers
+
+# Document Loaders
+docx2txt
+
+# Data Processing
+pandas
+numpy
+
+# Environment Variables
+python-dotenv
+
+# Validation
+pydantic
+
+# PDF Processing
+pymupdf
+pypdf
+
+# OCR
+paddleocr
+paddlepaddle
+
+# API Layer
+fastapi
+uvicorn
+
+# UI
+streamlit
+
+# Utilities
+tqdm
+
+# Logging
+loguru
+
+# Optional Evaluation
+scikit-learn
+
+# Excel Support
+openpyxl
+
+#For gemini
+google-generativeai
+langchain-google-genai

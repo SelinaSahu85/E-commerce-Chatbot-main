@@ -1,0 +1,79 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+.env/
+.venv/
+
+# Environment Variables
+.env
+
+# IDE
+.vscode/
+.idea/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+logs/
+*.log
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Models & Embeddings
+# NOTE: "models/" is intentionally NOT ignored here — it's the project's
+# Pydantic schema package (models/case.py etc.), not a weights folder.
+# Embeddings are cached by HuggingFace outside the repo; the FAISS index
+# lives under vectorstore/ below.
+vectorstore/
+faiss_index/
+*.faiss
+*.pkl
+
+# Auto-repaired CSV backups (created by database/schema.py on mismatch)
+*.csv.bak
+
+# LangSmith
+langsmith_runs/
+
+# Generated Outputs
+outputs/
+temp/
+tmp/
+
+# Uploaded Evidence
+uploads/
+evidence/
+
+# Database
+*.db
+*.sqlite3
+
+# Cache
+.cache/
+.pytest_cache/
+
+# Build
+build/
+dist/
+*.egg-info/
+
+# Coverage
+htmlcov/
+.coverage
+
+# Secrets
+credentials.json
+service_account.json
+apikeys.json
+config/secrets.yaml
